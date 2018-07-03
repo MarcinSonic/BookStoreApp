@@ -1,0 +1,42 @@
+<resources>
+<!-- Name for the application [CHAR LIMIT=12] -->
+<string name="app_name">Books Store App</string>
+
+<!-- Label for overflow menu option that inserts fake pet data into the app [CHAR LIMIT=20] -->
+<string name="action_insert_dummy_data">Insert Dummy Data</string>
+
+<!-- Label for overflow menu option that deletes all books data in the app [CHAR LIMIT=20] -->
+<string name="action_delete_all_entries">Delete All Books</string>
+
+<!-- Title for the activity to add a new book [CHAR LIMIT=20] -->
+<string name="editor_activity_title_new_book">Add a Book</string>
+
+<!-- Label for editor menu option to save book and leave editor [CHAR LIMIT=20] -->
+<string name="action_save">Save</string>
+
+<!-- Label for editor overflow menu option that deletes the current book [CHAR LIMIT=20] -->
+<string name="action_delete">Delete</string>
+
+<!-- Label for overview category of attributes in the editor [CHAR LIMIT=30] -->
+<string name="category_overview">Book</string>
+
+<!-- Label for measurement information in the editor [CHAR LIMIT=30] -->
+<string name="category_measurement">Store</string>
+
+<!-- Text hint for name field in the editor [CHAR LIMIT=30] -->
+<string name="hint_book_name">Name</string>
+
+<!-- Text hint for price field in the editor [CHAR LIMIT=30] -->
+<string name="hint_book_price">Price</string>
+
+<!-- Text hint for quantity field in the editor [CHAR LIMIT=30] -->
+<string name="hint_book_quantity">Quantity</string>
+
+<!-- Text hint for suplier name field in the editor [CHAR LIMIT=30] -->
+<string name="hint_book_sup_name">Suplier Name</string>
+
+<!-- Text hint for suplier phone field in the editor [CHAR LIMIT=30] -->
+<string name="hint_book_sup_phone">Suplier Phone</string>
+
+
+</resources>
