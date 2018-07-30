@@ -37,6 +37,7 @@
 
 <!-- Text hint for suplier phone field in the editor [CHAR LIMIT=30] -->
 <string name="hint_book_sup_phone">Suplier Phone</string>
+    <string name="unknown_price">not set</string>
 
 
 </resources>
