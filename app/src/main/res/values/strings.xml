@@ -38,6 +38,19 @@
 <!-- Text hint for suplier phone field in the editor [CHAR LIMIT=30] -->
 <string name="hint_book_sup_phone">Suplier Phone</string>
     <string name="unknown_price">not set</string>
+    <string name="empty_view_title_text">Nothing to read here</string>
+    <string name="empty_view_subtitle_text">Add some books</string>
+    <string name="editor_activity_title_edit_book">Edit Book</string>
+    <string name="editor_update_book_failed">Error with updating a book</string>
+    <string name="editor_update_book_successful">Book updated</string>
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+    <string name="discard">Discard</string>
+    <string name="keep_editing">Keep Editing</string>
+    <string name="delete_dialog_msg">Delete this book?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="editor_delete_book_failed">Error with deleting book</string>
+    <string name="editor_delete_book_successful">Book deleted</string>
 
 
 </resources>
