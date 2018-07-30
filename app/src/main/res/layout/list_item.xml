@@ -43,7 +43,7 @@
         android:textAppearance="?android:textAppearanceMedium"
         tools:text="1"
         android:textColor="#2B3D4D"  />
-    <ImageView
+    <Button
         android:id="@+id/sale_button"
         android:layout_width="26dp"
         android:layout_height="26dp"

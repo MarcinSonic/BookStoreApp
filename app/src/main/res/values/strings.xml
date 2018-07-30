@@ -51,6 +51,7 @@
     <string name="cancel">Cancel</string>
     <string name="editor_delete_book_failed">Error with deleting book</string>
     <string name="editor_delete_book_successful">Book deleted</string>
+    <string name="editor_dec_book">One book sold!</string>
 
 
 </resources>
