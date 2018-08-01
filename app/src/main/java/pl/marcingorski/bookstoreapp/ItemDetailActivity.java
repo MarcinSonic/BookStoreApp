@@ -2,6 +2,7 @@ package pl.marcingorski.bookstoreapp;
 
 import android.app.AlertDialog;
 import android.app.LoaderManager;
+import android.content.ContentUris;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -56,11 +57,20 @@ public class ItemDetailActivity extends AppCompatActivity implements LoaderManag
         mEditButton = (Button) findViewById ( R.id.edit_button );
         mDeleteButton = (Button) findViewById ( R.id.delete_button );
 
-        mPlusButton.setOnClickListener ( new View.OnClickListener () {
+        mDeleteButton.setOnClickListener ( new View.OnClickListener () {
             @Override
             public void onClick(View v) {
+                // Respond to a click on the "Delete"
+                showDeleteConfirmationDialog ();
+            }
+        } );
 
-                
+        mEditButton.setOnClickListener ( new View.OnClickListener () {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent ( ItemDetailActivity.this, EditorActivity.class);
+                intent.setData ( mCurrentBookUri );
+                startActivity ( intent );
             }
         } );
 

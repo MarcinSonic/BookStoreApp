@@ -36,7 +36,7 @@ public class BookCursorAdapter extends CursorAdapter {
 
     /**
      * This method binds the book data (in the current row pointed to by cursor) to the given
-     * list item layout. For example, the name for the current book can be set on the name TextView
+     * list item layout. For example, the name for the current book can be set on the books name TextView
      * in the list item layout.
      *
      * @param view    Existing view, returned earlier by newView() method
