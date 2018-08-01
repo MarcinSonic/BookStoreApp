@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CursorAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,7 +52,7 @@ public class BookCursorAdapter extends CursorAdapter {
         TextView summaryTextView = (TextView) view.findViewById(R.id.summary);
         final TextView quantityTextView = (TextView) view.findViewById ( R.id.quantity );
 
-        Button saleButton = view.findViewById ( R.id.sale_button );
+        ImageButton saleButton = view.findViewById ( R.id.sale_button );
 
         // Find the columns of book attributes that we're interested in
         int nameColumnIndex = cursor.getColumnIndex( BooksContract.BooksEntry.COLUMN_BOOKS_NAME);
@@ -76,7 +77,7 @@ public class BookCursorAdapter extends CursorAdapter {
                 Uri mCurrentBookUri = Uri.withAppendedPath ( BooksContract.BooksEntry.CONTENT_URI, id );
                 ContentValues values = new ContentValues (  );
 
-                if (quantity > 1) {
+                if (quantity >= 1) {
                     values.put( BooksContract.BooksEntry.COLUMN_BOOKS_QUANTITY, quantity -1);
 
                     int rowsAffected = context.getContentResolver ().update ( mCurrentBookUri, values, null, null );
@@ -86,7 +87,7 @@ public class BookCursorAdapter extends CursorAdapter {
                 } else {
                     Toast.makeText(context,
 
-                            context.getApplicationContext().getResources().getString( R.string.editor_dec_book ),
+                            context.getApplicationContext().getResources().getString( R.string.no_book_to_sell ),
 
                             Toast.LENGTH_SHORT).show();
                 }
