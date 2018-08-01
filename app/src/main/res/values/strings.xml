@@ -24,7 +24,7 @@
 <string name="category_measurement">Store</string>
 
 <!-- Text hint for name field in the editor [CHAR LIMIT=30] -->
-<string name="hint_book_name">Name</string>
+<string name="hint_book_name">Insert Book Title</string>
 
 <!-- Text hint for price field in the editor [CHAR LIMIT=30] -->
 <string name="hint_book_price">Price</string>
@@ -53,6 +53,7 @@
     <string name="editor_delete_book_successful">Book deleted</string>
     <string name="editor_dec_book">One book sold!</string>
     <string name="no_book_to_sell">There is no book to sell!</string>
+    <string name="price_currency">$</string>
 
 
 </resources>

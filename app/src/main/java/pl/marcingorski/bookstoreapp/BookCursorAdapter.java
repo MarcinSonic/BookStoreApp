@@ -95,7 +95,7 @@ public class BookCursorAdapter extends CursorAdapter {
 
         // Update the TextViews with the attributes for the current book
         nameTextView.setText(bookName);
-        summaryTextView.setText(bookPrice);
-        quantityTextView.setText ( bookQuantity );
+        summaryTextView.setText(bookPrice + context.getString( R.string.price_currency));
+        quantityTextView.setText ( "In stock: " + bookQuantity );
     }
 }

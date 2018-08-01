@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -18,13 +17,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
-
-import pl.marcingorski.bookstoreapp.data.BooksDbHelper;
 import pl.marcingorski.bookstoreapp.data.BooksContract.BooksEntry;
 
 /**
@@ -68,6 +62,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         }
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +88,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             // and display the current values in the editor
             getLoaderManager ().initLoader ( EXISTING_BOOK_LOADER, null, this );
         }
+
 
         // Find all relevant views that we will need to read user input from
         mNameEditText = (EditText) findViewById(R.id.edit_book_name);
@@ -128,7 +124,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         }
 
         // Create a ContentValues object where column names are the keys,
-        // and pet attributes from the editor are the values.
+        // and book attributes from the editor are the values.
 
         ContentValues values = new ContentValues ();
         values.put ( BooksEntry.COLUMN_BOOKS_NAME, nameString );
@@ -175,6 +171,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                         Toast.LENGTH_SHORT ).show ();
             }
         }
+
     }
 
     @Override
@@ -331,7 +328,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         builder.setMessage ( R.string.delete_dialog_msg );
         builder.setPositiveButton ( R.string.delete, new DialogInterface.OnClickListener () {
             public void onClick(DialogInterface dialog, int id) {
-                deletePet ();
+                deleteBook ();
             }
         } );
 
@@ -348,7 +345,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     }
 
-    private void deletePet() {
+    private void deleteBook() {
         if (mCurrentBookUri != null) {
             int rowsDeleted = getContentResolver ().delete ( mCurrentBookUri, null, null );
 
