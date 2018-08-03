@@ -91,11 +91,11 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
 
         // Find all relevant views that we will need to read user input from
-        mNameEditText = (EditText) findViewById(R.id.edit_book_name);
-        mPriceEditText = (EditText) findViewById(R.id.edit_book_price);
-        mQuantitytEditText = (EditText) findViewById(R.id.edit_book_quantity);
-        mSupNameEditText = (EditText) findViewById(R.id.edit_book_sup_name);
-        mSupPhoneEditText = (EditText) findViewById(R.id.edit_book_sup_phone);
+        mNameEditText = findViewById(R.id.edit_book_name);
+        mPriceEditText = findViewById(R.id.edit_book_price);
+        mQuantitytEditText = findViewById(R.id.edit_book_quantity);
+        mSupNameEditText = findViewById(R.id.edit_book_sup_name);
+        mSupPhoneEditText = findViewById(R.id.edit_book_sup_phone);
 
         mNameEditText.setOnTouchListener ( mTouchListener );
         mPriceEditText.setOnTouchListener ( mTouchListener );

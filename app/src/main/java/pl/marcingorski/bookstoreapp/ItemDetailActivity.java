@@ -9,13 +9,16 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import pl.marcingorski.bookstoreapp.data.BooksContract;
 import pl.marcingorski.bookstoreapp.data.BooksContract.BooksEntry;
 
 
@@ -40,17 +43,17 @@ public class ItemDetailActivity extends AppCompatActivity implements LoaderManag
         mCurrentBookUri = intent.getData ();
         getLoaderManager ().initLoader ( EXISTING_BOOK_LOADER, null, this );
 
-        mBookName = (TextView) findViewById ( R.id.book_name );
-        mBookPrice = (TextView) findViewById ( R.id.book_price );
-        mBookQuantity = (TextView) findViewById ( R.id.book_quantity );
-        mBookSupName = (TextView) findViewById ( R.id.book_sup_name );
-        mBookSupPhone = (TextView) findViewById ( R.id.book_sup_phone );
+        mBookName = findViewById ( R.id.book_name );
+        mBookPrice = findViewById ( R.id.book_price );
+        mBookQuantity = findViewById ( R.id.book_quantity );
+        mBookSupName = findViewById ( R.id.book_sup_name );
+        mBookSupPhone = findViewById ( R.id.book_sup_phone );
 
-        Button mPlusButton = (Button) findViewById ( R.id.plus_button );
-        Button mMinButton = (Button) findViewById ( R.id.min_button );
-        Button mCallSupButton = (Button) findViewById ( R.id.call_sup_button );
-        Button mEditButton = (Button) findViewById ( R.id.edit_button );
-        Button mDeleteButton = (Button) findViewById ( R.id.delete_button );
+        Button mPlusButton = findViewById ( R.id.plus_button );
+        Button mMinButton = findViewById ( R.id.min_button );
+        Button mCallSupButton = findViewById ( R.id.call_sup_button );
+        Button mEditButton = findViewById ( R.id.edit_button );
+        Button mDeleteButton = findViewById ( R.id.delete_button );
 
         mDeleteButton.setOnClickListener ( new View.OnClickListener () {
             @Override
@@ -69,25 +72,31 @@ public class ItemDetailActivity extends AppCompatActivity implements LoaderManag
             }
         } );
 
-        mPlusButton.setOnClickListener( new View.OnClickListener() {
+        mPlusButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View v) {
-               int quantityInteger = Integer.parseInt(mBookQuantity.getText().toString().trim());
-                mBookQuantity.setText(String.valueOf(quantityInteger ));
-                ContentValues values = new ContentValues (  );
-                values.put ( BooksEntry.COLUMN_BOOKS_QUANTITY, quantityInteger +1);
-                getContentResolver ().update ( mCurrentBookUri, values,null ,null );
-
+                String[] projection = {BooksEntry._ID, BooksEntry.COLUMN_BOOKS_QUANTITY};
+                Cursor cursor = getContentResolver().query(mCurrentBookUri, projection, null,
+                        null, null, null);
+                cursor.moveToFirst();
+                int quantity = cursor.getInt(cursor.getColumnIndex(BooksEntry.COLUMN_BOOKS_QUANTITY));
+                quantity++;
+                ContentValues values = new ContentValues();
+                values.put(BooksEntry.COLUMN_BOOKS_QUANTITY, quantity);
+                getContentResolver().update(mCurrentBookUri, values, null, null);
+                mBookQuantity.setText(String.valueOf(quantity));
             }
         });
-        mMinButton.setOnClickListener( new View.OnClickListener() {
+
+        mMinButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View v) {
+                decreaseCount ();
+            }
 
-                decreaseCount();
-                }
-
-            } );
+        });
 
         //Opening phone app, with the Supplier phone number in it, if the user gives us their permission
         mCallSupButton.setOnClickListener( new View.OnClickListener() {
@@ -196,18 +205,25 @@ public class ItemDetailActivity extends AppCompatActivity implements LoaderManag
         alertDialog.show ();
 
     }
-    private void decreaseCount() {
-        int quantityInteger = Integer.parseInt(mBookQuantity.getText().toString().trim());
-        mBookQuantity.setText(String.valueOf(quantityInteger ));
 
-        if ( quantityInteger <= 0) {
+
+
+    private void decreaseCount() {
+        String[] projection = {BooksEntry._ID, BooksEntry.COLUMN_BOOKS_QUANTITY};
+        Cursor cursor = getContentResolver().query(mCurrentBookUri, projection, null,
+                null, null, null);
+        cursor.moveToFirst();
+        int quantity = cursor.getInt(cursor.getColumnIndex(BooksEntry.COLUMN_BOOKS_QUANTITY));
+
+        if ( quantity <= 0) {
             Toast.makeText ( this, "Stock is empty", Toast.LENGTH_SHORT ).show ();
         }
         else  {
-
-            ContentValues values = new ContentValues ();
-            values.put ( BooksEntry.COLUMN_BOOKS_QUANTITY, quantityInteger - 1 );
-            getContentResolver ().update ( mCurrentBookUri, values, null, null );
+            quantity--;
+            ContentValues values = new ContentValues();
+            values.put(BooksEntry.COLUMN_BOOKS_QUANTITY, quantity);
+            getContentResolver().update(mCurrentBookUri, values, null, null);
+            mBookQuantity.setText(String.valueOf(quantity));
         }}
 
     private void deleteBook() {

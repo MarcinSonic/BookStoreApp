@@ -48,9 +48,9 @@ public class BookCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, final Context context, Cursor cursor) {
         // Find individual views that we want to modify in the list item layout
-        TextView nameTextView = (TextView) view.findViewById(R.id.name);
-        TextView summaryTextView = (TextView) view.findViewById(R.id.summary);
-        final TextView quantityTextView = (TextView) view.findViewById ( R.id.quantity );
+        TextView nameTextView = view.findViewById(R.id.name);
+        TextView summaryTextView = view.findViewById(R.id.summary);
+        final TextView quantityTextView = view.findViewById ( R.id.quantity );
 
         ImageButton saleButton = view.findViewById ( R.id.sale_button );
 
