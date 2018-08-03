@@ -110,6 +110,8 @@ public class ItemDetailActivity extends AppCompatActivity implements LoaderManag
 
     }
 
+
+
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String[] projection = {
