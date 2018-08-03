@@ -1,21 +1,28 @@
 package pl.marcingorski.bookstoreapp;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import pl.marcingorski.bookstoreapp.data.BooksContract;
 import pl.marcingorski.bookstoreapp.data.BooksContract.BooksEntry;
 
 
@@ -30,16 +37,13 @@ public class ItemDetailActivity extends AppCompatActivity implements LoaderManag
     private TextView mBookSupName;
     private TextView mBookSupPhone;
 
-    private Button mPlusButton;
     private Button mMinButton;
-    private Button mCallSupButton;
-    private Button mEditButton;
-    private Button mDeleteButton;
 
     @Override
     protected void onCreate(Bundle savedInstante) {
         super.onCreate ( savedInstante );
         setContentView ( R.layout.item_detail_activity );
+
 
         Intent intent = getIntent ();
         mCurrentBookUri = intent.getData ();
@@ -51,11 +55,11 @@ public class ItemDetailActivity extends AppCompatActivity implements LoaderManag
         mBookSupName = (TextView) findViewById ( R.id.book_sup_name );
         mBookSupPhone = (TextView) findViewById ( R.id.book_sup_phone );
 
-        mPlusButton = (Button) findViewById ( R.id.plus_button );
+        Button mPlusButton = (Button) findViewById ( R.id.plus_button );
         mMinButton = (Button) findViewById ( R.id.min_button );
-        mCallSupButton = (Button) findViewById ( R.id.call_sup_button );
-        mEditButton = (Button) findViewById ( R.id.edit_button );
-        mDeleteButton = (Button) findViewById ( R.id.delete_button );
+        Button mCallSupButton = (Button) findViewById ( R.id.call_sup_button );
+        Button mEditButton = (Button) findViewById ( R.id.edit_button );
+        Button mDeleteButton = (Button) findViewById ( R.id.delete_button );
 
         mDeleteButton.setOnClickListener ( new View.OnClickListener () {
             @Override
@@ -73,6 +77,37 @@ public class ItemDetailActivity extends AppCompatActivity implements LoaderManag
                 startActivity ( intent );
             }
         } );
+
+        mPlusButton.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               int quantityInteger = Integer.parseInt(mBookQuantity.getText().toString().trim());
+                mBookQuantity.setText(String.valueOf(quantityInteger ));
+                ContentValues values = new ContentValues (  );
+                values.put ( BooksEntry.COLUMN_BOOKS_QUANTITY, quantityInteger +1);
+                getContentResolver ().update ( mCurrentBookUri, values,null ,null );
+
+            }
+        });
+
+        //Opening phone app, with the Supplier phone number in it, if the user gives us their permission
+        mCallSupButton.setOnClickListener( new View.OnClickListener() {
+
+            @Override
+
+            public void onClick(View view) {
+
+                String supPhoneString = mBookSupPhone.getText().toString().trim();
+
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+
+                intent.setData(Uri.parse("tel:" + supPhoneString));
+
+                startActivity(intent);
+
+            }
+
+        });
 
     }
 

@@ -17,7 +17,8 @@ import pl.marcingorski.bookstoreapp.data.BooksContract;
 
 public class BookCursorAdapter extends CursorAdapter {
 
-    public BookCursorAdapter(Context context, Cursor c) {super(context, c, 0);}
+    public BookCursorAdapter(Context context, Cursor c) {
+        super(context, c, 0); }
 
     /**
      * Makes a new blank list item view. No data is set (or bound) to the views yet.
