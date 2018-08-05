@@ -119,57 +119,65 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         String quantityString = mQuantitytEditText.getText ().toString ().trim ();
         String supNameString = mSupNameEditText.getText ().toString ().trim ();
         String supPhoneString = mSupPhoneEditText.getText ().toString ().trim ();
+
         if (mCurrentBookUri == null && TextUtils.isEmpty ( nameString ) && TextUtils.isEmpty ( priceString ) && TextUtils.isEmpty ( quantityString )) {
-            return;
-        }
+            finish ();}
 
-        // Create a ContentValues object where column names are the keys,
-        // and book attributes from the editor are the values.
-
-        ContentValues values = new ContentValues ();
-        values.put ( BooksEntry.COLUMN_BOOKS_NAME, nameString );
-        values.put ( BooksEntry.COLUMN_BOOKS_PRICE, priceString );
-        int quantity = 0;
-        if (!TextUtils.isEmpty ( quantityString )) {
-            quantity = Integer.parseInt ( quantityString );
-        }
-        values.put ( BooksEntry.COLUMN_BOOKS_QUANTITY, quantity );
-        values.put ( BooksEntry.COLUMN_BOOKS_SUP_NAME, supNameString );
-        values.put ( BooksEntry.COLUMN_BOOKS_SUP_PHONE, supPhoneString );
-
-
-        // Determine if this is a new or existing book by checking if mCurrentBookUri is null or not
-        if (mCurrentBookUri == null) {
-            // This is a NEW book, so insert a new book into the provider,
-            // returning the content URI for the new book.
-            Uri newUri = getContentResolver ().insert ( BooksEntry.CONTENT_URI, values );
-
-            // Show a toast message depending on whether or not the insertion was successful.
-
-            if (newUri == null) {
-                Toast.makeText ( this, "Error with saving book", Toast.LENGTH_SHORT ).show ();
-
-            } else {
-                Toast.makeText ( this, "Book saved", Toast.LENGTH_SHORT ).show ();
-            }
+        if (TextUtils.isEmpty ( nameString ) || TextUtils.isEmpty ( priceString ) || TextUtils.isEmpty ( quantityString )) {
+            Toast.makeText ( this, "Fill empty fields", Toast.LENGTH_SHORT ).show ();
 
         } else {
-            // Otherwise this is an EXISTING book, so update the book with content URI: mCurrentBookUri
-            // and pass in the new ContentValues. Pass in null for the selection and selection args
-            // because mCurrentBookUri will already identify the correct row in the database that
-            // we want to modify.
-            int rowsAffected = getContentResolver ().update ( mCurrentBookUri, values, null, null );
 
-            // Show a toast message depending on whether or not the update was successful.
-            if (rowsAffected == 0) {
-                // If no rows were affected, then there was an error with the update.
-                Toast.makeText ( this, getString ( R.string.editor_update_book_failed ),
-                        Toast.LENGTH_SHORT ).show ();
-            } else {
-                // Otherwise, the update was successful and we can display a toast.
-                Toast.makeText ( this, getString ( R.string.editor_update_book_successful ),
-                        Toast.LENGTH_SHORT ).show ();
+
+            // Create a ContentValues object where column names are the keys,
+            // and book attributes from the editor are the values.
+
+            ContentValues values = new ContentValues ();
+            values.put ( BooksEntry.COLUMN_BOOKS_NAME, nameString );
+            values.put ( BooksEntry.COLUMN_BOOKS_PRICE, priceString );
+            int quantity = 0;
+            if (!TextUtils.isEmpty ( quantityString )) {
+                quantity = Integer.parseInt ( quantityString );
             }
+            values.put ( BooksEntry.COLUMN_BOOKS_QUANTITY, quantity );
+            values.put ( BooksEntry.COLUMN_BOOKS_SUP_NAME, supNameString );
+            values.put ( BooksEntry.COLUMN_BOOKS_SUP_PHONE, supPhoneString );
+
+
+            // Determine if this is a new or existing book by checking if mCurrentBookUri is null or not
+            if (mCurrentBookUri == null) {
+                // This is a NEW book, so insert a new book into the provider,
+                // returning the content URI for the new book.
+                Uri newUri = getContentResolver ().insert ( BooksEntry.CONTENT_URI, values );
+
+                // Show a toast message depending on whether or not the insertion was successful.
+
+                if (newUri == null) {
+                    Toast.makeText ( this, "Error with saving book", Toast.LENGTH_SHORT ).show ();
+
+                } else {
+                    Toast.makeText ( this, "Book saved", Toast.LENGTH_SHORT ).show ();
+                }
+
+            } else {
+                // Otherwise this is an EXISTING book, so update the book with content URI: mCurrentBookUri
+                // and pass in the new ContentValues. Pass in null for the selection and selection args
+                // because mCurrentBookUri will already identify the correct row in the database that
+                // we want to modify.
+                int rowsAffected = getContentResolver ().update ( mCurrentBookUri, values, null, null );
+
+                // Show a toast message depending on whether or not the update was successful.
+                if (rowsAffected == 0) {
+                    // If no rows were affected, then there was an error with the update.
+                    Toast.makeText ( this, getString ( R.string.editor_update_book_failed ),
+                            Toast.LENGTH_SHORT ).show ();
+                } else {
+                    // Otherwise, the update was successful and we can display a toast.
+                    Toast.makeText ( this, getString ( R.string.editor_update_book_successful ),
+                            Toast.LENGTH_SHORT ).show ();
+                }
+            }
+            finish ();
         }
 
     }
@@ -198,7 +206,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             // Respond to a click on the "Save" menu option
             case R.id.action_save:
                 saveBook ();
-                finish ();
                 return true;
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
